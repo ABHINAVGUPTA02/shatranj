@@ -1,5 +1,6 @@
 package com.chess_project.thesilentbell.shatranj.player;
 
+import com.chess_project.thesilentbell.shatranj.Alliance;
 import com.chess_project.thesilentbell.shatranj.board.Board;
 import com.chess_project.thesilentbell.shatranj.board.Move;
 import com.chess_project.thesilentbell.shatranj.piece.Piece;
@@ -13,5 +14,15 @@ public class WhitePlayer extends Player{
     @Override
     public Collection<Piece> getActivePieces() {
         return this.board.getWhitePieces();
+    }
+
+    @Override
+    public Alliance getAlliance() {
+        return Alliance.WHITE;
+    }
+
+    @Override
+    public Player getOpponent() {
+        return this.board.blackPlayer();
     }
 }

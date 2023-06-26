@@ -9,6 +9,7 @@ import com.chess_project.thesilentbell.shatranj.piece.Piece;
 import com.chess_project.thesilentbell.shatranj.piece.Queen;
 import com.chess_project.thesilentbell.shatranj.piece.Rook;
 import com.chess_project.thesilentbell.shatranj.player.BlackPlayer;
+import com.chess_project.thesilentbell.shatranj.player.Player;
 import com.chess_project.thesilentbell.shatranj.player.WhitePlayer;
 
 import java.util.ArrayList;
@@ -51,6 +52,15 @@ public class Board {
         }
 
         return builder.toString();
+    }
+
+    public Player whitePlayer(){
+        return this.whitePlayer;
+    }
+
+
+    public Player blackPlayer(){
+        return this.blackPlayer;
     }
 
     public Collection<Piece> getBlackPieces(){
