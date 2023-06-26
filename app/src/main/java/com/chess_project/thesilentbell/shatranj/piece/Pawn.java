@@ -65,4 +65,9 @@ public class Pawn extends Piece {
 
         return LegalMoves;
     }
+
+    @Override
+    public String toString(){
+        return PieceType.PAWN.toString();
+    }
 }
