@@ -3,6 +3,8 @@ package com.chess_project.thesilentbell.shatranj.piece;
 import com.chess_project.thesilentbell.shatranj.Alliance;
 import com.chess_project.thesilentbell.shatranj.board.Board;
 import com.chess_project.thesilentbell.shatranj.board.BoardUtils;
+import static com.chess_project.thesilentbell.shatranj.board.Move.*;
+
 import com.chess_project.thesilentbell.shatranj.board.Move;
 import com.chess_project.thesilentbell.shatranj.board.Tile;
 
@@ -20,7 +22,7 @@ public class Knight extends Piece{
     }
 
     @Override
-    public Collection<Move> calculateLegalMoves(Board board) {
+    public Collection<Move> calculateLegalMoves(final Board board) {
         int candidateDestinationCoordinate;
         final List<Move> LegalMoves = new ArrayList<>();
 
@@ -35,13 +37,13 @@ public class Knight extends Piece{
 
                 final Tile candinateDestinationTile = board.getTile(candidateDestinationCoordinate);
                 if (!candinateDestinationTile.isTileOccupied()) {
-                    LegalMoves.add(new Move());
+                    LegalMoves.add(new MajorMove(board,this,candidateDestinationCoordinate));
                 } else {
                     final Piece pieceAtDestination = candinateDestinationTile.getPiece();
                     final Alliance pieceAlliance = pieceAtDestination.getPieceAlliance();
 
                     if (this.pieceAlliance != pieceAlliance) {
-                        LegalMoves.add(new Move());
+                        LegalMoves.add(new AttackMove(board,this,candidateDestinationCoordinate,pieceAtDestination));
                     }
                 }
             }
