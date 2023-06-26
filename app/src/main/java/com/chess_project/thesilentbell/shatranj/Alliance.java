@@ -1,14 +1,18 @@
 package com.chess_project.thesilentbell.shatranj;
 
+import com.chess_project.thesilentbell.shatranj.player.BlackPlayer;
+import com.chess_project.thesilentbell.shatranj.player.Player;
+import com.chess_project.thesilentbell.shatranj.player.WhitePlayer;
+
 public enum Alliance {
-    WHITE{
+    WHITE {
         @Override
-        public int getDirection(){
+        public int getDirection() {
             return -1;
         }
 
         @Override
-        public boolean isWhite(){
+        public boolean isWhite() {
             return true;
         }
 
@@ -16,15 +20,20 @@ public enum Alliance {
         public boolean isBlack() {
             return false;
         }
-    },
-    BLACK{
+
         @Override
-        public int getDirection(){
+        public Player choosePlayer(final WhitePlayer whitePlayer, final BlackPlayer blackPlayer) {
+            return whitePlayer;
+        }
+    },
+    BLACK {
+        @Override
+        public int getDirection() {
             return 1;
         }
 
         @Override
-        public boolean isWhite(){
+        public boolean isWhite() {
             return false;
         }
 
@@ -32,8 +41,18 @@ public enum Alliance {
         public boolean isBlack() {
             return true;
         }
+
+        @Override
+        public Player choosePlayer(final WhitePlayer whitePlayer, final BlackPlayer blackPlayer) {
+            return blackPlayer;
+        }
     };
-    abstract public int getDirection();
+
+    public abstract int getDirection();
+
     public abstract boolean isWhite();
+
     public abstract boolean isBlack();
+
+    public abstract Player choosePlayer(WhitePlayer whitePlayer, BlackPlayer blackPlayer);
 }

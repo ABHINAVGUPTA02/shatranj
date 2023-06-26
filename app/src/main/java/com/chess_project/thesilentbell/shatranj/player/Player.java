@@ -73,7 +73,7 @@ public abstract class Player {
     public boolean isCastled(){
         return false;
     }
-    
+
     protected boolean hasEscapeMoves() {
         for(final Move move: this.legalMoves){
             final MoveTransition transition = makeMove(move);

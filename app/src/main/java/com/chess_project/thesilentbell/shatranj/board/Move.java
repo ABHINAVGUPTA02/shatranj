@@ -2,6 +2,7 @@ package com.chess_project.thesilentbell.shatranj.board;
 
 import com.chess_project.thesilentbell.shatranj.piece.Piece;
 
+import static com.chess_project.thesilentbell.shatranj.board.Board.*;
 public abstract class Move {
     final Board board;
     final Piece piece;
@@ -27,7 +28,22 @@ public abstract class Move {
 
         @Override
         public Board execute() {
-            return null;
+            final Builder builder = new Builder();
+
+            for(final Piece piece: this.board.getCurrentPlayer().getActivePieces()){
+                //TODO hashcode and equals for pieces
+                if(!this.movedPiece.equals(piece)){
+                    builder.setPiece(piece);
+                }
+            }
+
+            for(final Piece piece: this.board.getCurrentPlayer().getOpponent().getActivePieces()){
+                builder.setPiece(piece);
+            }
+
+            builder.setPiece(null);
+            builder.setMoveMaker(this.board.getCurrentPlayer().getOpponent().getAlliance());
+            return builder.build();
         }
     }
 
@@ -45,6 +61,5 @@ public abstract class Move {
             return null;
         }
     }
-
 
 }
