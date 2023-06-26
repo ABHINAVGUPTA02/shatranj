@@ -8,6 +8,8 @@ import com.chess_project.thesilentbell.shatranj.piece.Pawn;
 import com.chess_project.thesilentbell.shatranj.piece.Piece;
 import com.chess_project.thesilentbell.shatranj.piece.Queen;
 import com.chess_project.thesilentbell.shatranj.piece.Rook;
+import com.chess_project.thesilentbell.shatranj.player.BlackPlayer;
+import com.chess_project.thesilentbell.shatranj.player.WhitePlayer;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -22,6 +24,8 @@ public class Board {
     private final Collection<Piece> whitePieces;
     private final Collection<Piece> blackPieces;
 
+    private final WhitePlayer whitePlayer;
+    private final BlackPlayer blackPlayer;
 
     private Board(Builder builder){
         this.gameBoard = createGameBoard(builder);
@@ -30,6 +34,9 @@ public class Board {
 
         final Collection<Move> whiteStandardLegalMoves = calculateLegalMoves(this.whitePieces);
         final Collection<Move> blackStandardLegalMoves = calculateLegalMoves(this.blackPieces);
+
+        this.whitePlayer = new WhitePlayer(this,whiteStandardLegalMoves,blackStandardLegalMoves);
+        this.blackPlayer = new BlackPlayer(this,whiteStandardLegalMoves,blackStandardLegalMoves);
     }
 
     @Override
@@ -44,6 +51,14 @@ public class Board {
         }
 
         return builder.toString();
+    }
+
+    public Collection<Piece> getBlackPieces(){
+        return this.blackPieces;
+    }
+
+    public Collection<Piece> getWhitePieces(){
+        return this.whitePieces;
     }
 
     private Collection<Move> calculateLegalMoves(final Collection<Piece> pieces){
@@ -72,13 +87,9 @@ public class Board {
     }
 
     public Tile getTile(final int tileCoordinate){
-        // Check if the tile coordinate is valid
         if (BoardUtils.isValidTileCoordinate(tileCoordinate)) {
-            // Return the corresponding tile from the game board list
             return gameBoard.get(tileCoordinate);
         } else {
-            // Handle invalid tile coordinate (e.g., throw an exception or return null)
-            // Here, I'll return null as an example
             return null;
         }
     }

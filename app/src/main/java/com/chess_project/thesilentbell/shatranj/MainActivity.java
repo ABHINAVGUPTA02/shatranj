@@ -10,9 +10,6 @@ import com.chess_project.thesilentbell.shatranj.board.Board;
 public class MainActivity extends AppCompatActivity {
     private TextView boardTextView;
 
-//    public static void main(String[] args) {
-//
-//    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
