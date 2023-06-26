@@ -35,11 +35,11 @@ public class Knight extends Piece{
                     continue;
                 }
 
-                final Tile candinateDestinationTile = board.getTile(candidateDestinationCoordinate);
-                if (!candinateDestinationTile.isTileOccupied()) {
+                final Tile candidateDestinationTile = board.getTile(candidateDestinationCoordinate);
+                if (!candidateDestinationTile.isTileOccupied()) {
                     LegalMoves.add(new MajorMove(board,this,candidateDestinationCoordinate));
                 } else {
-                    final Piece pieceAtDestination = candinateDestinationTile.getPiece();
+                    final Piece pieceAtDestination = candidateDestinationTile.getPiece();
                     final Alliance pieceAlliance = pieceAtDestination.getPieceAlliance();
 
                     if (this.pieceAlliance != pieceAlliance) {
