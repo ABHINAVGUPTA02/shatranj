@@ -22,6 +22,12 @@ public class Knight extends Piece{
     }
 
     @Override
+    public Knight movedPiece(final Move move) {
+        return new Knight(move.getDestinationCoordinate(),move.getMovedPiece().getPieceAlliance());
+    }
+
+
+    @Override
     public Collection<Move> calculateLegalMoves(final Board board) {
         int candidateDestinationCoordinate;
         final List<Move> LegalMoves = new ArrayList<>();

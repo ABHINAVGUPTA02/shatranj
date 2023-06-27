@@ -21,6 +21,12 @@ public class King extends Piece{
     }
 
     @Override
+    public King movedPiece(final Move move) {
+        return new King(move.getDestinationCoordinate(),move.getMovedPiece().getPieceAlliance());
+    }
+
+
+    @Override
     public Collection<Move> calculateLegalMoves(Board board) {
         final List<Move> LegalMoves = new ArrayList<>();
         for(final int currentCandidateOffset : CANDIDATE_MOVE_COORDINATE){

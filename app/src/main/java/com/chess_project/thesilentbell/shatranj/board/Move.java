@@ -5,17 +5,21 @@ import com.chess_project.thesilentbell.shatranj.piece.Piece;
 import static com.chess_project.thesilentbell.shatranj.board.Board.*;
 public abstract class Move {
     final Board board;
-    final Piece piece;
+    final Piece movedPiece;
     final int destinationCoordinate;
 
-    private Move(final Board board,final Piece piece,final int destinationCoordinate) {
+    private Move(final Board board,final Piece movedPiece,final int destinationCoordinate) {
         this.board = board;
-        this.piece = piece;
+        this.movedPiece = movedPiece;
         this.destinationCoordinate = destinationCoordinate;
     }
 
     public int getDestinationCoordinate(){
         return this.destinationCoordinate;
+    }
+
+    public Piece getMovedPiece(){
+        return this.movedPiece;
     }
 
     public abstract Board execute();
@@ -40,8 +44,8 @@ public abstract class Move {
             for(final Piece piece: this.board.getCurrentPlayer().getOpponent().getActivePieces()){
                 builder.setPiece(piece);
             }
-
-            builder.setPiece(null);
+            //move the moved piece
+            builder.setPiece(this.movedPiece.movedPiece(this));
             builder.setMoveMaker(this.board.getCurrentPlayer().getOpponent().getAlliance());
             return builder.build();
         }
