@@ -3,9 +3,13 @@ package com.chess_project.thesilentbell.shatranj.player;
 import com.chess_project.thesilentbell.shatranj.Alliance;
 import com.chess_project.thesilentbell.shatranj.board.Board;
 import com.chess_project.thesilentbell.shatranj.board.Move;
+import com.chess_project.thesilentbell.shatranj.board.Tile;
 import com.chess_project.thesilentbell.shatranj.piece.Piece;
 
+import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.List;
 
 public class BlackPlayer extends Player{
     public BlackPlayer(final Board board, final Collection<Move> whiteStandardLegalMoves, final Collection<Move> blackStandardLegalMoves) {
@@ -29,6 +33,33 @@ public class BlackPlayer extends Player{
 
     @Override
     public Collection<Move> calculatingKingCastles(Collection<Move> playerLegals, Collection<Move> opponentLegals) {
-        return null;
+        final List<Move> kingCastles = new ArrayList<>();
+
+        if(this.playerKing.isFirstMove() && (!this.isInCheck())){
+            //Black king side castle
+            if(!(this.board.getTile(5).isTileOccupied()) && !(this.board.getTile(6).isTileOccupied())){
+                final Tile rookTile = this.board.getTile(7);
+                if(rookTile.isTileOccupied() && rookTile.getPiece().isFirstMove()){
+                    if(Player.calculateAttacksOnTile(5,opponentLegals).isEmpty() &&
+                            Player.calculateAttacksOnTile(6,opponentLegals).isEmpty() &&
+                            rookTile.getPiece().getPieceType().isRook()){
+                        //TODO add a CASTLE MOVE!
+                        kingCastles.add(null);
+                    }
+                }
+            }
+
+            if(!this.board.getTile(1).isTileOccupied() &&
+                    !this.board.getTile(2).isTileOccupied() &&
+                    !this.board.getTile(3).isTileOccupied()){
+                final Tile rookTile = this.board.getTile(0);
+                if(rookTile.isTileOccupied() && rookTile.getPiece().isFirstMove()){
+                    //TODO add castle move
+                    kingCastles.add(null);
+                }
+            }
+        }
+
+        return Collections.unmodifiableList(kingCastles);
     }
 }

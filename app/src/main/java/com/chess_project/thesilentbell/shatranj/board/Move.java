@@ -2,6 +2,7 @@ package com.chess_project.thesilentbell.shatranj.board;
 
 import com.chess_project.thesilentbell.shatranj.piece.Pawn;
 import com.chess_project.thesilentbell.shatranj.piece.Piece;
+import com.chess_project.thesilentbell.shatranj.piece.Rook;
 
 import static com.chess_project.thesilentbell.shatranj.board.Board.*;
 public abstract class Move {
@@ -186,24 +187,63 @@ public abstract class Move {
 
     public static class castleMove extends Move{
 
-        public castleMove(final Board board,final Piece piece,final int destinationCoordinate) {
+        protected final Rook castleRook;
+        protected final int castleRookStart;
+        protected final int castleRookDestination;
+
+        public castleMove(final Board board,final Piece piece,final int destinationCoordinate,final Rook castleRook,final int castleRookStart,final int castleRookDestination) {
             super(board, piece, destinationCoordinate);
+            this.castleRook = castleRook;
+            this.castleRookStart = castleRookStart;
+            this.castleRookDestination = castleRookDestination;
+        }
+
+        public Rook getCastleRook(){
+            return this.castleRook;
+        }
+
+        @Override
+        public boolean isCastlingMove(){
+            return true;
+        }
+
+        @Override
+        public Board execute(){
+            final Builder builder = new Builder();
+            for(final Piece piece : this.board.getCurrentPlayer().getActivePieces()){
+                if(!(this.movedPiece.equals(piece)) && !this.castleRook.equals(piece)) {
+                    builder.setPiece(piece);
+                }
+            }
+            for(final Piece piece : this.board.getCurrentPlayer().getOpponent().getActivePieces()) {
+                builder.setPiece(piece);
+            }
+            //TODO look into the isFirstMove
+            builder.setPiece(this.movedPiece.movedPiece(this));
+            builder.setPiece(new Rook(this.castleRookDestination,this.castleRook.getPieceAlliance()));
+            builder.setMoveMaker(this.board.getCurrentPlayer().getAlliance());
+            return builder.build();
         }
 
     }
 
     public static final class kingSideCastleMove extends castleMove{
 
-        public kingSideCastleMove(final Board board,final Piece piece,final int destinationCoordinate) {
-            super(board, piece, destinationCoordinate);
+        public kingSideCastleMove(final Board board,final Piece piece,final int destinationCoordinate,final Rook castleRook,final int castleRookStart,final int castleRookDestination) {
+            super(board, piece, destinationCoordinate, castleRook, castleRookStart, castleRookDestination);
+        }
+
+        @Override
+        public String toString(){
+            return "O-O-O";
         }
 
     }
 
     public static final class queenSideCastleMove extends castleMove{
 
-        public queenSideCastleMove(final Board board,final Piece piece,final int destinationCoordinate) {
-            super(board, piece, destinationCoordinate);
+        public queenSideCastleMove(final Board board,final Piece piece,final int destinationCoordinate,final Rook castleRook,final int castleRookStart,final int castleRookDestination) {
+            super(board, piece, destinationCoordinate, castleRook, castleRookStart, castleRookDestination);
         }
 
     }
