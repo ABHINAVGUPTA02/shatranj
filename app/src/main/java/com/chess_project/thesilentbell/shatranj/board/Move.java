@@ -188,7 +188,7 @@ public abstract class Move {
     public static class castleMove extends Move{
 
         protected final Rook castleRook;
-        protected final int castleRookStart;
+        protected final int castleRookStart; 
         protected final int castleRookDestination;
 
         public castleMove(final Board board,final Piece piece,final int destinationCoordinate,final Rook castleRook,final int castleRookStart,final int castleRookDestination) {
@@ -237,7 +237,6 @@ public abstract class Move {
         public String toString(){
             return "O-O-O";
         }
-
     }
 
     public static final class queenSideCastleMove extends castleMove{
@@ -246,6 +245,10 @@ public abstract class Move {
             super(board, piece, destinationCoordinate, castleRook, castleRookStart, castleRookDestination);
         }
 
+        @Override
+        public String toString(){
+            return "O-O-O";
+        }
     }
 
     public static final class nullMove extends Move{

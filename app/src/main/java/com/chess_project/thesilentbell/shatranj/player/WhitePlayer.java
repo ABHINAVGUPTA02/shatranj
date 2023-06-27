@@ -1,10 +1,13 @@
 package com.chess_project.thesilentbell.shatranj.player;
 
+import static com.chess_project.thesilentbell.shatranj.board.Move.*;
+
 import com.chess_project.thesilentbell.shatranj.Alliance;
 import com.chess_project.thesilentbell.shatranj.board.Board;
 import com.chess_project.thesilentbell.shatranj.board.Move;
 import com.chess_project.thesilentbell.shatranj.board.Tile;
 import com.chess_project.thesilentbell.shatranj.piece.Piece;
+import com.chess_project.thesilentbell.shatranj.piece.Rook;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -31,7 +34,7 @@ public class WhitePlayer extends Player{
     }
 
     @Override
-    public Collection<Move> calculatingKingCastles(Collection<Move> playerLegals, Collection<Move> opponentLegals) {
+    public Collection<Move> calculatingKingCastles(final Collection<Move> playerLegals, final Collection<Move> opponentLegals) {
         final List<Move> kingCastles = new ArrayList<>();
 
         if(this.playerKing.isFirstMove() && (!this.isInCheck())){
@@ -43,7 +46,12 @@ public class WhitePlayer extends Player{
                        Player.calculateAttacksOnTile(62,opponentLegals).isEmpty() &&
                        rookTile.getPiece().getPieceType().isRook()){
                         //TODO add a CASTLE MOVE!
-                        kingCastles.add(null);
+                        kingCastles.add(new kingSideCastleMove(this.board,
+                                                                    this.playerKing,
+                                                    62,
+                                                                    (Rook) rookTile.getPiece() ,
+                                                                    rookTile.getTileCoordinate(),
+                                                    61));
                     }
                 }
             }
@@ -54,7 +62,12 @@ public class WhitePlayer extends Player{
                 final Tile rookTile = this.board.getTile(56);
                 if(rookTile.isTileOccupied() && rookTile.getPiece().isFirstMove()){
                     //TODO add castle move
-                    kingCastles.add(null);
+                    kingCastles.add(new queenSideCastleMove(this.board,
+                                                            this.playerKing,
+                                            58,
+                                                            (Rook) rookTile.getPiece(),
+                                                            rookTile.getTileCoordinate(),
+                                            59));
                 }
             }
         }

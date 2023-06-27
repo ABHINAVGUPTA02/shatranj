@@ -5,6 +5,7 @@ import com.chess_project.thesilentbell.shatranj.board.Board;
 import com.chess_project.thesilentbell.shatranj.board.Move;
 import com.chess_project.thesilentbell.shatranj.board.Tile;
 import com.chess_project.thesilentbell.shatranj.piece.Piece;
+import com.chess_project.thesilentbell.shatranj.piece.Rook;
 
 import java.util.ArrayList;
 import java.util.Collection;
@@ -32,7 +33,7 @@ public class BlackPlayer extends Player{
     }
 
     @Override
-    public Collection<Move> calculatingKingCastles(Collection<Move> playerLegals, Collection<Move> opponentLegals) {
+    public Collection<Move> calculatingKingCastles(final Collection<Move> playerLegals, final Collection<Move> opponentLegals) {
         final List<Move> kingCastles = new ArrayList<>();
 
         if(this.playerKing.isFirstMove() && (!this.isInCheck())){
@@ -44,7 +45,12 @@ public class BlackPlayer extends Player{
                             Player.calculateAttacksOnTile(6,opponentLegals).isEmpty() &&
                             rookTile.getPiece().getPieceType().isRook()){
                         //TODO add a CASTLE MOVE!
-                        kingCastles.add(null);
+                        kingCastles.add(new Move.kingSideCastleMove(this.board,
+                                                                    this.playerKing,
+                                                    6,
+                                                                    (Rook) rookTile.getPiece() ,
+                                                                    rookTile.getTileCoordinate(),
+                                                    5));
                     }
                 }
             }
@@ -55,7 +61,12 @@ public class BlackPlayer extends Player{
                 final Tile rookTile = this.board.getTile(0);
                 if(rookTile.isTileOccupied() && rookTile.getPiece().isFirstMove()){
                     //TODO add castle move
-                    kingCastles.add(null);
+                    kingCastles.add(new Move.queenSideCastleMove(this.board,
+                                                                this.playerKing,
+                                                2,
+                                                                (Rook) rookTile.getPiece() ,
+                                                                rookTile.getTileCoordinate(),
+                                                3));
                 }
             }
         }
